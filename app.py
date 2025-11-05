@@ -1,3 +1,4 @@
+%%writefile app.py
 import streamlit as st
 import requests
 import pandas as pd
@@ -33,7 +34,7 @@ with st.sidebar:
     
     with tab2:
         city_name = st.text_input("Enter city name", placeholder="e.g., Seoul, London, New York")
-        if st.button("Search City", use_container_width=True):
+        if st.button("Search City", width="stretch"):
             if city_name:
                 try:
                     url = f"https://geocoding-api.open-meteo.com/v1/search?name={city_name}&count=1&language=en&format=json"
@@ -58,7 +59,7 @@ with st.sidebar:
     lat_input = st.number_input("Latitude", value=float(st.session_state.latitude), format="%.4f", key="lat_input")
     lon_input = st.number_input("Longitude", value=float(st.session_state.longitude), format="%.4f", key="lon_input")
     
-    if st.button("Use These Coordinates", use_container_width=True):
+    if st.button("Use These Coordinates", width="stretch"):
         st.session_state.latitude = lat_input
         st.session_state.longitude = lon_input
         st.rerun()
@@ -73,7 +74,7 @@ with st.sidebar:
     
     st.write("---")
     
-    get_weather_btn = st.button("🔍 GET WEATHER FORECAST", type="primary", use_container_width=True)
+    get_weather_btn = st.button("🔍 GET WEATHER FORECAST", type="primary", width="stretch")
 
 # Main area
 col1, col2 = st.columns([1, 1])
@@ -256,7 +257,7 @@ if get_weather_btn:
             fig.add_trace(go.Scatter(x=dates, y=temp_max, name='High', mode='lines+markers', line=dict(color='red', width=3)))
             fig.add_trace(go.Scatter(x=dates, y=temp_min, name='Low', mode='lines+markers', line=dict(color='blue', width=3)))
             fig.update_layout(xaxis_title="Date", yaxis_title=f"Temperature ({temp_symbol})", height=400)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
             
     except Exception as e:
         st.error(f"Error fetching forecast: {str(e)}")
